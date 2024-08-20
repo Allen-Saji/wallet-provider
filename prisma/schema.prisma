@@ -14,32 +14,29 @@ datasource db {
 }
 
 model User {
-  id              String    @id  @default(uuid())  
+  id              String      @id  @default(uuid())  
   username        String
-  sub             String    @default("")
+  sub             String      @default("")
   name            String?
   profilePicture  String?
   password        String?
-  solWallets      SolWallet[]
-  ethWallets      EthWallet[]
+  seedPhrase      String?     
   provider        Provider
+  wallets         Wallet[]    
 }
 
-model SolWallet {
-  id          String   @id  @default(uuid())
-  publicKey   String
-  privateKey  String
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
+model Wallet {  
+  id              String      @id  @default(uuid())
+  name            String      // Wallet name like 'wallet 1', 'wallet 2'
+  derivationPath  String      // Derivation path for HD wallets
+  solPublicKey    String?     // Solana public key, optional
+  solPrivateKey   String?     // Solana private key, optional
+  ethPublicKey    String?     // Ethereum public key, optional
+  ethPrivateKey   String?     // Ethereum private key, optional
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
 }
 
-model EthWallet {
-  id          String   @id  @default(uuid())
-  publicKey   String
-  privateKey  String
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
-}
 
 enum Provider {
   Google
