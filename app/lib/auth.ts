@@ -26,6 +26,7 @@ const iv = randomBytes(16); // Initialization vector
 
 // Function to encrypt data
 function encrypt(text: string): { iv: string; encryptedData: string } {
+  const iv = randomBytes(16); // Initialization vector
   const cipher = createCipheriv(
     algorithm,
     Buffer.from(encryptionKey, "hex"),
@@ -114,29 +115,23 @@ export const authConfig = {
         const ethPublicKey = ethWallet.getChecksumAddressString();
         const ethPrivateKey = ethWallet.getPrivateKeyString();
 
-        // Encrypt the private keys and seed phrase
-        const encryptedSeedPhrase = encrypt(seedPhrase);
-        const encryptedSolPrivateKey = encrypt(solPrivateKey);
-        const encryptedEthPrivateKey = encrypt(ethPrivateKey);
-
         await db.user.create({
           data: {
             username: email,
             name: profile?.name,
-            //@ts-ignore
             profilePicture: profile?.picture,
             provider: "Google",
             sub: account.providerAccountId,
-            seedPhrase: encryptedSeedPhrase.encryptedData, // Save the encrypted seed phrase
+            seedPhrase: JSON.stringify(encrypt(seedPhrase)), // Store as JSON
             wallets: {
               create: [
                 {
-                  name: "wallet 1", // First wallet
+                  name: "wallet 1",
                   derivationPath: solDerivationPath,
                   solPublicKey: solPublicKey,
-                  solPrivateKey: encryptedSolPrivateKey.encryptedData, // Save the encrypted Solana private key
+                  solPrivateKey: encrypt(solPrivateKey).encryptedData, // Save only encrypted data
                   ethPublicKey: ethPublicKey,
-                  ethPrivateKey: encryptedEthPrivateKey.encryptedData, // Save the encrypted Ethereum private key
+                  ethPrivateKey: encrypt(ethPrivateKey).encryptedData, // Save only encrypted data
                 },
               ],
             },
