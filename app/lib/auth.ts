@@ -22,7 +22,6 @@ export interface session extends Session {
 const algorithm = "aes-256-cbc";
 const encryptionKey =
   process.env.ENCRYPTION_KEY ?? randomBytes(32).toString("hex"); // Should be 32 bytes
-const iv = randomBytes(16); // Initialization vector
 
 // Function to encrypt data
 function encrypt(text: string): { iv: string; encryptedData: string } {
@@ -129,9 +128,9 @@ export const authConfig = {
                   name: "wallet 1",
                   derivationPath: solDerivationPath,
                   solPublicKey: solPublicKey,
-                  solPrivateKey: encrypt(solPrivateKey).encryptedData, // Save only encrypted data
+                  solPrivateKey: JSON.stringify(encrypt(solPrivateKey)),
                   ethPublicKey: ethPublicKey,
-                  ethPrivateKey: encrypt(ethPrivateKey).encryptedData, // Save only encrypted data
+                  ethPrivateKey: JSON.stringify(encrypt(ethPrivateKey)),
                 },
               ],
             },
