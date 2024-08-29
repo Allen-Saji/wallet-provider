@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Wallet Provider
+
+This is a web based hd wallet provider that associates your wallets to your google account, you can send receive eth/sol and view balances as of now.
+Please note the google-auth feature in production requires some form of verification which I was not able to complete in time due to which you may not be able to login, so I have attached a demo video below, showing the working of the application.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Setup](#setup)
+- [Running the Project](#running-the-project)
+- [Demo](#demo)
+- [Screenshots](#screenshots)
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up the project locally.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Make sure you have the following installed:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js (v14.x or later)
+- npm (v6.x or later)
+- PostgreSQL (a running instance of PostgreSQL)
+- A Google account for OAuth setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Setup
 
-## Learn More
+1. **Clone the repository:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/Allen-Saji/wallet-provider.git
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Navigate to the project directory:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   cd wallet-provider
+   ```
 
-## Deploy on Vercel
+3. **Install the dependencies:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. **Setup the environment variables:**
+
+   - Create a `.env` file in the root directory.
+   - Refer to `.env.example` for the necessary environment variables.
+
+   ```env
+   DATABASE_URL=your_postgres_connection_string
+   NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   ```
+
+5. **Generate the Prisma client:**
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   The application will start running on `http://localhost:3000`.
+
+## Demo
+
+You can view the live demo of the application here: [Demo Link](https://www.loom.com/share/8a07b265aab54163876cf2e40b06d366)
+
+## Screenshots
+
+### Login Page
+
+![Login Page](./public/landing_page.png)
+
+### Dashboard Page
+
+![Login Page](./public/wallet_Dashboard.png)
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Contact
+
+For more information, contact [Allen Saji](mailto:your-email@example.com).
