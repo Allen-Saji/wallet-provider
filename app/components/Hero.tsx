@@ -21,7 +21,7 @@ export default function Hero() {
         Welcome to WalletEase
       </div>
       <div className="text-xl text-purple-200 mb-12">
-        "Your Gateway to Effortless Crypto Management"
+        Your Gateway to Effortless Crypto Management
       </div>
       {session?.user ? (
         <DashboardButton onClick={handleDashboardRedirect}>
