@@ -3,6 +3,22 @@
 This is a web based hd wallet provider that associates your wallets to your google account, you can send receive eth/sol and view balances as of now.
 Please note the google-auth feature in production requires some form of verification which I was not able to complete in time due to which you may not be able to login, so I have attached a demo video below, showing the working of the application.
 
+## Demo
+
+You can view the live demo of the application here: [Demo Link](https://www.loom.com/share/8a07b265aab54163876cf2e40b06d366)
+
+## Screenshots
+
+### Login Page
+
+![Login Page](./public/landing_page.png)
+
+### Dashboard Page
+
+![Login Page](./public/wallet_Dashboard.png)
+
+---
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -68,22 +84,6 @@ Make sure you have the following installed:
    ```
 
    The application will start running on `http://localhost:3000`.
-
-## Demo
-
-You can view the live demo of the application here: [Demo Link](https://www.loom.com/share/8a07b265aab54163876cf2e40b06d366)
-
-## Screenshots
-
-### Login Page
-
-![Login Page](./public/landing_page.png)
-
-### Dashboard Page
-
-![Login Page](./public/wallet_Dashboard.png)
-
----
 
 ## License
 
