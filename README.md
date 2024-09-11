@@ -1,7 +1,7 @@
 # Wallet Provider
 
 This is a web based hd wallet provider that associates your wallets to your google account, you can send receive eth/sol and view balances as of now.
-Please note the google-auth feature in production requires some form of verification which I was not able to complete in time due to which you may not be able to login, so I have attached a demo video below, showing the working of the application.
+
 
 ## Demo
 
