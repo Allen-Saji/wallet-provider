@@ -8,7 +8,7 @@ const algorithm = "aes-256-cbc";
 
 async function fetchWallets(userId: string) {
   const response = await axios.get(
-    `http://localhost:3000/api/wallets?userId=${userId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/wallets?userId=${userId}`
   );
   return response.data;
 }
