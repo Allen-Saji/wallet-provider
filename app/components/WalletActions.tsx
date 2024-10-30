@@ -9,22 +9,33 @@ const WalletActions: React.FC = () => {
   const userId = (session?.user as { uid: string })?.uid;
   const router = useRouter();
 
-  // State to hold the seed phrase
+  // States for the seed phrase, loading, and fetching status
   const [seedPhrase, setSeedPhrase] = useState<string | null>(null);
+  const [isCreatingWallet, setIsCreatingWallet] = useState<boolean>(false);
+  const [isFetchingWallet, setIsFetchingWallet] = useState<boolean>(false);
 
   const handleCreateNewWallet = async () => {
     if (!userId) return;
 
+    setIsCreatingWallet(true); // Start creation loading state
     try {
       const response = await axios.post("/api/wallets/create", {
         userId,
       });
       console.log("New Wallet Created:", response.data);
 
-      // Trigger a refresh or redirect to the same page to fetch updated wallet data
-      router.refresh(); // refreshes the current page and triggers the server component to re-fetch data
+      // End creation loading, start fetching state
+      setIsCreatingWallet(false);
+      setIsFetchingWallet(true);
+
+      // Refresh to fetch updated wallet data
+      await router.refresh();
+
+      // End fetching state when done
+      setIsFetchingWallet(false);
     } catch (error) {
       console.error("Failed to create wallet:", error);
+      setIsCreatingWallet(false); // End loading state in case of error
     }
   };
 
@@ -35,15 +46,14 @@ const WalletActions: React.FC = () => {
       const response = await axios.get(
         "/api/wallets/seedPhrase?userId=" + userId
       );
-      // Fetch the seed phrase again and update the state
-      setSeedPhrase(response.data);
+      setSeedPhrase(response.data); // Update seed phrase state
     } catch (error) {
       console.error("Failed to fetch seed phrase:", error);
     }
   };
 
   const handleCloseSeedPhrase = () => {
-    setSeedPhrase(null); // Clear the seed phrase state to hide it
+    setSeedPhrase(null); // Clear the seed phrase state
   };
 
   return (
@@ -51,9 +61,18 @@ const WalletActions: React.FC = () => {
       <div className="flex space-x-4">
         <button
           onClick={handleCreateNewWallet}
-          className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
+          disabled={isCreatingWallet || isFetchingWallet} // Disable button while loading or fetching
+          className={`px-4 py-2 text-white rounded-lg ${
+            isCreatingWallet || isFetchingWallet
+              ? "bg-purple-300"
+              : "bg-purple-500 hover:bg-purple-700"
+          }`}
         >
-          Create New Wallet
+          {isCreatingWallet
+            ? "Creating New Wallet..."
+            : isFetchingWallet
+            ? "Wallet creation successful, fetching new wallet..."
+            : "Create New Wallet"}
         </button>
         <button
           onClick={handleShowSeedPhrase}
@@ -64,7 +83,7 @@ const WalletActions: React.FC = () => {
       </div>
       {/* Display seed phrase if available */}
       {seedPhrase && (
-        <div className="mt-4 p-4 border rounded bg-gray-100">
+        <div className="mt-4 text-white p-4 border rounded bg-gray-900">
           <h3 className="text-lg font-semibold mb-2">Seed Phrase:</h3>
           <p>{seedPhrase}</p>
           <button
