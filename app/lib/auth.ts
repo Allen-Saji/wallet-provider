@@ -1,7 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import db from "@/app/db";
 import { Keypair as SolanaKeypair } from "@solana/web3.js";
-import { ethers } from "ethers";
 import * as bip39 from "bip39";
 import { hdkey } from "ethereumjs-wallet";
 import { derivePath } from "ed25519-hd-key";
@@ -34,18 +33,6 @@ function encrypt(text: string): { iv: string; encryptedData: string } {
   let encrypted = cipher.update(text, "utf8", "hex");
   encrypted += cipher.final("hex");
   return { iv: iv.toString("hex"), encryptedData: encrypted };
-}
-
-// Function to decrypt data (if needed)
-function decrypt(encrypted: { iv: string; encryptedData: string }): string {
-  const decipher = createDecipheriv(
-    algorithm,
-    Buffer.from(encryptionKey, "hex"),
-    Buffer.from(encrypted.iv, "hex")
-  );
-  let decrypted = decipher.update(encrypted.encryptedData, "hex", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
 }
 
 export const authConfig = {
